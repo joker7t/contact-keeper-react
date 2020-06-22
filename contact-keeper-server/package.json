@@ -1,7 +1,7 @@
 {
     "name": "contact-keeper",
     "description": "Contact Manager App",
-    "authors": "author",
+    "authors": "Toan Nguyen",
     "version": "1.0.0",
     "main": "server.js",
     "scripts": {
