@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Register = () => {
     const [user, setUser] = useState({
@@ -11,6 +12,13 @@ const Register = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
 
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const res = await axios.post('/api/users', user, config);
+        console.log(res.data);
     }
 
     const onChange = (e) => {
@@ -33,11 +41,11 @@ const Register = () => {
                 </div>
                 <div className='form-group'>
                     <label htmlFor='password'>Password</label>
-                    <input type='password' value={user.password} name='password' required onChange={onChange} />
+                    <input type='password' value={user.password} name='password' minLength={6} required onChange={onChange} />
                 </div>
                 <div className='form-group'>
                     <label htmlFor='password2'>Confirm Password</label>
-                    <input type='password' value={user.password2} name='password2' required onChange={onChange} />
+                    <input type='password' value={user.password2} name='password2' minLength={6} required onChange={onChange} />
                 </div>
 
                 <button type='submit' className='btn btn-block btn-primary'>Register</button>

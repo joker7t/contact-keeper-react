@@ -14,7 +14,8 @@ const Contacts = ({ isLoading, contacts, setIsLoading, getContacts, filteredCont
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                // const loadedContacts = await axios.get('/api/contacts');
+                setIsLoading(true);
+                const loadedContacts = await axios.get('/api/contacts');
                 // getContacts(loadedContacts);
                 setContactItems(contacts);
             } catch (error) {
