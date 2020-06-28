@@ -1,10 +1,10 @@
-import { DELETE_CONTACT, UPDATE_CONTACT, FILTER_CONTACTS } from "./type";
+import { GET_CONTACTS } from "./type";
 
 //add contact
-export const addContact = contact => dispatch => {
+export const getContacts = contacts => dispatch => {
     dispatch({
-        type: DELETE_CONTACT,
-        payload: contact
+        type: GET_CONTACTS,
+        payload: contacts
     });
 };
 

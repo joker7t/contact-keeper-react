@@ -1,11 +1,17 @@
 import React from 'react';
+import Contacts from './contacts/Contacts';
 
-const Landing = () => {
+const Home = () => {
     return (
-        <div>
-
+        <div className='grid-2'>
+            <div>
+                {
+                    //contact form
+                }
+            </div>
+            <Contacts />
         </div>
     );
 }
 
-export default Landing;
+export default Home;
