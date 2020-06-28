@@ -16,12 +16,12 @@ const Contacts = ({ isLoading, contacts, setIsLoading, getContacts, filteredCont
             try {
                 setIsLoading(true);
                 const loadedContacts = await axios.get('/api/contacts');
-                // getContacts(loadedContacts);
-                setContactItems(contacts);
+                getContacts(loadedContacts.data);
+                setIsLoading(false);
             } catch (error) {
+                setIsLoading(false);
                 console.log(error);
             }
-            setIsLoading(false);
         }
 
         fetchContacts();

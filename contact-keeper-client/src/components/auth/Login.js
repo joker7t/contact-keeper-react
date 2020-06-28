@@ -3,9 +3,13 @@ import axios from 'axios';
 import { Alert } from 'react-bootstrap';
 import jwt_decode from 'jwt-decode';
 import Loader from '../layouts/Loader';
+import setJwtToken from '../../utils/setJwtToken';
+import PropTypes from "prop-types";
+import { login } from '../../actions/userAction';
+import { connect } from 'react-redux';
 
-const Login = ({ history }) => {
-    const [user, setUser] = useState({
+const Login = ({ history, login, setUser }) => {
+    const [loginUser, setLoginUser] = useState({
         email: 'toan@gmail.com',
         password: '123456'
     });
@@ -22,25 +26,28 @@ const Login = ({ history }) => {
                 }
             }
 
-            const res = await axios.post('/api/auth', user, config);
+            const res = await axios.post('/api/auth', loginUser, config);
+            setIsLoading(false);
             const { token } = res.data;
-            // localStorage.setItem("token", token);
-            // setJwtToken(token);
+            localStorage.setItem("token", token);
+            setJwtToken(token);
             const decodedToken = jwt_decode(token);
-            console.log(decodedToken);
+            setUser(decodedToken.user.id);
 
             history.push('/');
         } catch (error) {
             console.log(error);
             setIsLoginSuccess(false);
+            setIsLoading(false);
         }
-        setIsLoading(false);
     }
 
     const onChange = (e) => {
-        setUser({ [e.target.name]: e.target.value });
+        setLoginUser({ ...loginUser, [e.target.name]: e.target.value });
         setIsLoginSuccess(true);
     }
+
+    const { email, password } = loginUser;
 
     return (
         <div>
@@ -52,11 +59,11 @@ const Login = ({ history }) => {
                     <form onSubmit={onSubmit}>
                         <div className='form-group'>
                             <label htmlFor='email'>Email</label>
-                            <input type='email' value={user.email} name='email' required onChange={onChange} />
+                            <input type='email' value={email} name='email' required onChange={onChange} />
                         </div>
                         <div className='form-group'>
                             <label htmlFor='password'>Password</label>
-                            <input type='password' value={user.password} name='password' minLength={6} required onChange={onChange} />
+                            <input type='password' value={password} name='password' minLength={6} required onChange={onChange} />
                         </div>
                         {isLoginSuccess ? '' :
                             <Alert variant='danger'>
@@ -72,4 +79,8 @@ const Login = ({ history }) => {
     );
 }
 
-export default Login;
+Login.propTypes = {
+    login: PropTypes.func.isRequired
+};
+
+export default connect(null, { login })(Login);

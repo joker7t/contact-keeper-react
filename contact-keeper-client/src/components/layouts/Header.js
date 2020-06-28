@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
+import setJwtToken from '../../utils/setJwtToken';
 
-const Header = ({ title, icon }) => {
+const Header = ({ title, icon, user, setUser }) => {
 
     const onLogout = () => {
-        console.log('logout');
-
+        localStorage.removeItem("token");
+        setJwtToken(false);
+        setUser(null);
     }
 
     return (
@@ -18,7 +20,7 @@ const Header = ({ title, icon }) => {
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-                {true ?
+                {!user ?
                     <Nav className="ml-auto">
                         <Nav.Link as={Link} to="/login">Login</Nav.Link>
                         <Nav.Link as={Link} to="/register">Register</Nav.Link>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Register = () => {
-    const [user, setUser] = useState({
+    const [registerUser, setRegisterUser] = useState({
         name: '',
         email: '',
         password: '',
@@ -17,12 +17,12 @@ const Register = () => {
                 'Content-Type': 'application/json'
             }
         }
-        const res = await axios.post('/api/users', user, config);
+        const res = await axios.post('/api/users', registerUser, config);
         console.log(res.data);
     }
 
     const onChange = (e) => {
-        setUser({ [e.target.name]: e.target.value });
+        setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
     }
 
     return (
@@ -33,19 +33,19 @@ const Register = () => {
             <form onSubmit={onSubmit}>
                 <div className='form-group'>
                     <label htmlFor='name'>Name</label>
-                    <input type='text' value={user.name} name='name' required onChange={onChange} />
+                    <input type='text' value={registerUser.name} name='name' required onChange={onChange} />
                 </div>
                 <div className='form-group'>
                     <label htmlFor='email'>Email</label>
-                    <input type='email' value={user.email} name='email' required onChange={onChange} />
+                    <input type='email' value={registerUser.email} name='email' required onChange={onChange} />
                 </div>
                 <div className='form-group'>
                     <label htmlFor='password'>Password</label>
-                    <input type='password' value={user.password} name='password' minLength={6} required onChange={onChange} />
+                    <input type='password' value={registerUser.password} name='password' minLength={6} required onChange={onChange} />
                 </div>
                 <div className='form-group'>
                     <label htmlFor='password2'>Confirm Password</label>
-                    <input type='password' value={user.password2} name='password2' minLength={6} required onChange={onChange} />
+                    <input type='password' value={registerUser.password2} name='password2' minLength={6} required onChange={onChange} />
                 </div>
 
                 <button type='submit' className='btn btn-block btn-primary'>Register</button>
