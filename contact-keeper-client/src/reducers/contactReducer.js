@@ -1,4 +1,4 @@
-import { GET_CONTACTS, ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER } from "../actions/type";
+import { GET_CONTACTS, ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER, DELETE_FILTER_CONTACT } from "../actions/type";
 
 const initialState = {
     contacts: [
@@ -67,6 +67,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 filteredContacts: null
+            };
+        case DELETE_FILTER_CONTACT:
+            return {
+                ...state,
+                filteredContacts: state.filteredContacts && state.filteredContacts.filter(filterContact => filterContact._id !== action.payload)
             };
         default:
             return state;

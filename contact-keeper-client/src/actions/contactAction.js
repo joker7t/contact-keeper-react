@@ -1,4 +1,4 @@
-import { GET_CONTACTS, ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER } from "./type";
+import { GET_CONTACTS, ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER, DELETE_FILTER_CONTACT } from "./type";
 
 //get all contacts
 export const getContacts = contacts => dispatch => {
@@ -60,5 +60,13 @@ export const filterContacts = (filter) => dispatch => {
 export const clearFilterContacts = () => dispatch => {
     dispatch({
         type: CLEAR_FILTER
+    });
+};
+
+//delete filter contact
+export const deleteFilterContact = id => dispatch => {
+    dispatch({
+        type: DELETE_FILTER_CONTACT,
+        payload: id
     });
 };

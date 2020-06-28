@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { deleteContact, setSelectedContact, clearSelectedContact } from '../../actions/contactAction';
+import { deleteContact, setSelectedContact, clearSelectedContact, deleteFilterContact } from '../../actions/contactAction';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-const ContactItem = ({ contact, deleteContact, setSelectedContact, clearSelectedContact }) => {
+const ContactItem = ({ contact, deleteContact, setSelectedContact, clearSelectedContact, selectedContact, deleteFilterContact }) => {
 
     const onDelete = async (id) => {
         // await axios();
 
-        clearSelectedContact();
+        if (selectedContact && id === selectedContact._id) {
+            clearSelectedContact();
+        }
+        deleteFilterContact(id);
         deleteContact(id);
     }
 
@@ -47,7 +50,12 @@ const ContactItem = ({ contact, deleteContact, setSelectedContact, clearSelected
 ContactItem.propTypes = {
     deleteContact: PropTypes.func.isRequired,
     setSelectedContact: PropTypes.func.isRequired,
-    clearSelectedContact: PropTypes.func.isRequired
+    clearSelectedContact: PropTypes.func.isRequired,
+    deleteFilterContact: PropTypes.func.isRequired
 };
 
-export default connect(null, { deleteContact, setSelectedContact, clearSelectedContact })(ContactItem);
+const mapStateToProps = (state) => ({
+    selectedContact: state.contact.selectedContact
+});
+
+export default connect(mapStateToProps, { deleteContact, setSelectedContact, clearSelectedContact, deleteFilterContact })(ContactItem);

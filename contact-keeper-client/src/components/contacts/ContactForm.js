@@ -18,6 +18,13 @@ const ContactForm = ({ addContact, selectedContact, clearSelectedContact, update
             try {
                 if (selectedContact) {
                     setContact(selectedContact);
+                } else {
+                    setContact({
+                        name: '',
+                        email: '',
+                        phone: '',
+                        type: 'personal'
+                    });
                 }
             } catch (error) {
                 console.log(error);
