@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from "prop-types";
 import { getContacts } from '../../actions/contactAction';
 import { setIsLoading } from '../../actions/controlAction';
@@ -7,14 +7,15 @@ import axios from 'axios';
 import Loader from '../layouts/Loader';
 import ContactItem from './ContactItem';
 
-const Contacts = ({ isLoading, contacts, setIsLoading, getContacts }) => {
+const Contacts = ({ isLoading, contacts, setIsLoading, getContacts, filteredContacts }) => {
+    const [contactItems, setContactItems] = useState([]);
 
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                const loadedContacts = await axios.get('/api/contacts');
-
+                // const loadedContacts = await axios.get('/api/contacts');
                 // getContacts(loadedContacts);
+                setContactItems(contacts);
             } catch (error) {
                 console.log(error);
             }
@@ -26,9 +27,17 @@ const Contacts = ({ isLoading, contacts, setIsLoading, getContacts }) => {
         //eslint-disable-next-line
     }, []);
 
+    useEffect(() => {
+        if (filteredContacts) {
+            setContactItems(filteredContacts);
+        } else {
+            setContactItems(contacts);
+        }
+    }, [contacts, filteredContacts]);
+
     const showContacts = () => (
-        contacts.map((contact, i) =>
-            <ContactItem key={i} contact={contact} />
+        contactItems.map((contactItem, i) =>
+            <ContactItem key={i} contact={contactItem} />
         )
     );
 
@@ -47,12 +56,13 @@ Contacts.propTypes = {
     getContacts: PropTypes.func.isRequired,
     contacts: PropTypes.array.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    setIsLoading: PropTypes.func.isRequired,
+    setIsLoading: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     isLoading: state.control.isLoading,
-    contacts: state.contact.contacts
+    contacts: state.contact.contacts,
+    filteredContacts: state.contact.filteredContacts
 });
 
 export default connect(mapStateToProps, { getContacts, setIsLoading })(Contacts);
