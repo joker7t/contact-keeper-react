@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import Loader from '../layouts/Loader';
 import ContactItem from './ContactItem';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const Contacts = ({ isLoading, contacts, setIsLoading, getContacts, filteredContacts }) => {
     const [contactItems, setContactItems] = useState([]);
@@ -36,9 +37,13 @@ const Contacts = ({ isLoading, contacts, setIsLoading, getContacts, filteredCont
     }, [contacts, filteredContacts]);
 
     const showContacts = () => (
-        contactItems.map((contactItem, i) =>
-            <ContactItem key={i} contact={contactItem} />
-        )
+        <TransitionGroup>
+            {contactItems.map((contactItem, i) =>
+                <CSSTransition key={i} timeout={500} classNames='item'>
+                    <ContactItem contact={contactItem} />
+                </CSSTransition>
+            )}
+        </TransitionGroup>
     );
 
     return (
