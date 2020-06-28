@@ -5,6 +5,7 @@ import { setIsLoading } from '../../actions/controlAction';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Loader from '../layouts/Loader';
+import ContactItem from './ContactItem';
 
 const Contacts = ({ isLoading, contacts, setIsLoading, getContacts }) => {
 
@@ -13,7 +14,7 @@ const Contacts = ({ isLoading, contacts, setIsLoading, getContacts }) => {
             try {
                 const loadedContacts = await axios.get('/api/contacts');
 
-                getContacts(loadedContacts);
+                // getContacts(loadedContacts);
             } catch (error) {
                 console.log(error);
             }
@@ -25,11 +26,17 @@ const Contacts = ({ isLoading, contacts, setIsLoading, getContacts }) => {
         //eslint-disable-next-line
     }, []);
 
+    const showContacts = () => (
+        contacts.map((contact, i) =>
+            <ContactItem key={i} contact={contact} />
+        )
+    );
+
     return (
         <div>
             {isLoading ? <Loader /> :
                 <div>
-
+                    {showContacts()}
                 </div>
             }
         </div>

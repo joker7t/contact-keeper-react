@@ -1,16 +1,19 @@
 import React from 'react';
 import Contacts from './contacts/Contacts';
+import { Container } from 'react-bootstrap';
 
 const Home = () => {
     return (
-        <div className='grid-2'>
-            <div>
-                {
-                    //contact form
-                }
+        <Container>
+            <div className='grid-2'>
+                <div>
+                    {
+                        //contact form
+                    }
+                </div>
+                <Contacts />
             </div>
-            <Contacts />
-        </div>
+        </Container>
     );
 }
 

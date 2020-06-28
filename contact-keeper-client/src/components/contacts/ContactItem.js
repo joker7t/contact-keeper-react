@@ -4,7 +4,7 @@ const ContactItem = ({ contact }) => {
     return (
         <div className='card bg-light'>
             <h3 className='text-primary text-left'>
-                {contact.name}
+                {contact.name} <span className={'badge ' + contact.type === 'professional' ? 'badge-success' : 'badge-primary'}>{contact.type}</span>
             </h3>
         </div>
     );
