@@ -6,9 +6,9 @@ const Header = ({ title, icon }) => {
     return (
         <Navbar expand="lg" bg='primary' variant='dark' >
             <Navbar.Brand as={Link} to="/">
-                <h1>
+                <h2>
                     <i className={icon}></i> {title}
-                </h1>
+                </h2>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
