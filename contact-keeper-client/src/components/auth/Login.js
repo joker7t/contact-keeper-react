@@ -68,7 +68,7 @@ const Login = ({ history, login, setUser }) => {
                         {isLoginSuccess ? '' :
                             <Alert variant='danger'>
                                 Wrong credentials
-                        </Alert>
+                            </Alert>
                         }
 
                         <button type='submit' className='btn btn-block btn-primary'>Login</button>
