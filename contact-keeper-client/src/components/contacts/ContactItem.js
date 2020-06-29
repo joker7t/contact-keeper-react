@@ -6,9 +6,8 @@ import axios from 'axios';
 
 const ContactItem = ({ contact, deleteContact, setSelectedContact, clearSelectedContact, selectedContact, deleteFilterContact }) => {
 
-    const onDelete = async (id) => {
-        // await axios();
-
+    const onDelete = (id) => {
+        axios.delete(`/api/contacts/${id}`);
         if (selectedContact && id === selectedContact._id) {
             clearSelectedContact();
         }

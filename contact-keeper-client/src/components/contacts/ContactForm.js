@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 import { addContact, clearSelectedContact, updateContact } from '../../actions/contactAction';
 import { connect } from 'react-redux';
-import { v4 } from 'uuid';
 import axios from 'axios';
 
 const ContactForm = ({ addContact, selectedContact, clearSelectedContact, updateContact }) => {
@@ -53,21 +52,23 @@ const ContactForm = ({ addContact, selectedContact, clearSelectedContact, update
     }
 
     const onAddContact = async () => {
-        contact._id = v4();
-
-        // await axios.post();
-        addContact(contact);
-        setContact({
-            name: '',
-            email: '',
-            phone: '',
-            type: 'personal'
-        });
+        try {
+            const addedContact = await axios.post('/api/contacts', contact);
+            addContact(addedContact.data);
+            setContact({
+                name: '',
+                email: '',
+                phone: '',
+                type: 'personal'
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const onEditContact = async () => {
-        // await axios.put();
-        updateContact(contact);
+        const editedContact = await axios.put(`/api/contacts/${contact._id}`, contact);
+        updateContact(editedContact);
     }
 
     const onClear = () => {
